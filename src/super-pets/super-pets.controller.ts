@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { SuperPetsService } from './super-pets.service';
 import { CreateSuperPetDto } from './dto/create-super-pet.dto';
 import { UpdateSuperPetDto } from './dto/update-super-pet.dto';
 import { ParseMongoIdPipe } from './pipes/parse-mongo-id/parse-mongo-id.pipe';
+import { PaginationDTO } from 'src/common/dtos/pagination.dto';
 
 @Controller('super-pets')
 export class SuperPetsController {
@@ -16,8 +17,10 @@ export class SuperPetsController {
   }
 
   @Get()
-  findAll() {
-    return this.superPetsService.findAllSuperpets();
+  findAll(
+    @Query() paginationDTO: PaginationDTO
+  ) {
+    return this.superPetsService.findAllSuperpets(paginationDTO);
   }
 
   @Get(':findBy')

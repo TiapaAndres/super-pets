@@ -4,6 +4,7 @@ import { UpdateSuperPetDto } from './dto/update-super-pet.dto';
 import { isValidObjectId, Model } from 'mongoose';
 import { SuperPet } from './entities/super-pet.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { PaginationDTO } from 'src/common/dtos/pagination.dto';
 
 @Injectable()
 export class SuperPetsService {
@@ -28,8 +29,11 @@ export class SuperPetsService {
     }
   }
 
-  async findAllSuperpets() {
-    const superPets = await this.superPetsModel.find();
+  async findAllSuperpets(paginationDTO:PaginationDTO) {
+    const superPets = await this.superPetsModel.find()
+    .limit(paginationDTO.limit)
+    .skip(paginationDTO.offset)
+    .select('-__v');
     return superPets;
   }
 
