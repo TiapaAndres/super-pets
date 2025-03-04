@@ -69,7 +69,7 @@ export class SuperPetsService {
       return {...updatedSuperPet.toJSON(), ...updateSuperPetDto};
     } catch (error) {
       if (error.code === 11000) {
-        throw new BadRequestException(`Ya existe en Db la mascota: ${JSON.stringify(error.keyValue)}`);
+        throw new BadRequestException(`Ya existe en Db la mascota: "${JSON.stringify(error.keyValue)}"`);
       } else {
         console.log(error);
         throw new BadRequestException('No se pudo actualizar la mascota: Error desconocido', error);
