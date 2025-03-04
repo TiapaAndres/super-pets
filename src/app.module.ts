@@ -18,7 +18,12 @@ import { JoiValidationSchema } from 'config/joi.validation';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public')
     }),
-    MongooseModule.forRoot(process.env.MONGO_DB),
+    MongooseModule.forRoot(
+      process.env.MONGO_DB,
+      {
+        dbName: 'Your-Pet-Database',
+      }
+    ),
     SuperPetsModule,
     SeedModule,
     CommonModule
