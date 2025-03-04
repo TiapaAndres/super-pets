@@ -43,9 +43,15 @@ npm i -g @nestjs/cli
 ```bash
 docker-compose up -d
 ```
-## Crear Seed para alimentad nuestra DB:
-````bash
-http://www.localhost:3030/api/v2/seed
+
+## Clonar .env.template y renombrar a .env
+
+## Llenar variables de entorno definidas.
+
+## Crear Seed para alimentar nuestra DB:
+
+```bash
+url: http://www.localhost:3030/api/v2/seed
 ```
 
 ## Compile and run the project

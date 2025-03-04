@@ -5,14 +5,18 @@ import { isValidObjectId, Model } from 'mongoose';
 import { SuperPet } from './entities/super-pet.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { PaginationDTO } from 'src/common/dtos/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SuperPetsService {
 
   constructor(
     @InjectModel(SuperPet.name)
-    private readonly superPetsModel: Model<SuperPet>
-  ) {}
+    private readonly superPetsModel: Model<SuperPet>,
+
+    private readonly configService: ConfigService
+  ) {
+  }
 
   async create(createSuperPetDto: CreateSuperPetDto) {
     try {
@@ -30,10 +34,12 @@ export class SuperPetsService {
   }
 
   async findAllSuperpets(paginationDTO:PaginationDTO) {
+    const setLimit = +paginationDTO.limit || this.configService.get<number>('default_limit')
     const superPets = await this.superPetsModel.find()
-    .limit(paginationDTO.limit)
+    .limit(setLimit)
     .skip(paginationDTO.offset)
     .select('-__v');
+    console.log('🔰 default_limit: ', setLimit);
     return superPets;
   }
 
